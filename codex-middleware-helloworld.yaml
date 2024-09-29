@@ -1,0 +1,9 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: hello-world
+  namespace: codex-ns
+spec:
+  headers:
+    customResponseHeaders:
+      X-Hello-World: "Hello from Traefik"

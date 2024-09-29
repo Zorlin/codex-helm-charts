@@ -1,0 +1,9 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: auth
+  namespace: codex-ns
+spec:
+  basicAuth:
+    secret: codex-api-basic-auth
+    realm: "Authentication Required - Private Area"

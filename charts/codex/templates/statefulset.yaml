@@ -44,7 +44,7 @@ spec:
         {{- range .Values.initContainers }}
         - {{ tpl (toYaml .) $ | nindent 10 | trim }}
         {{- end }}
-        {{- if eq (include "codex.initEnv.enabled" .) "true" }}
+        {{- if .Values.initEnv.enabled }}
         - name: init-env
           image: {{ print .Values.initEnv.image.repository ":" .Values.initEnv.image.tag }}
           imagePullPolicy: {{ .Values.initEnv.image.pullPolicy }}
@@ -204,7 +204,10 @@ spec:
             {{- if .Values.persistence.enabled }}
             - name: {{ .Values.persistence.name }}
               mountPath: {{ .Values.codex.env.CODEX_DATA_DIR }}
-            {{ else if .Values.persistence.exis}}
+            {{- if .Values.persistence.existingClaim }}
+              subPath: codex-node{{ $replica_suffix }}
+            {{- end}}
+            {{- else }}
             - name: {{ .Values.persistence.name }}
               emptyDir: {}
             {{- end }}
@@ -245,8 +248,13 @@ spec:
                 path: codex-eth-private-key
             defaultMode: 384
         {{- end }}
+        {{- if and .Values.persistence.enabled (.Values.persistence.existingClaim) }}
+        - name: {{ .Values.persistence.name }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim }}
+        {{- end }}
 
-  {{- if .Values.persistence.enabled }}
+  {{- if and .Values.persistence.enabled (not .Values.persistence.existingClaim) }}
   volumeClaimTemplates:
     - metadata:
         name: {{ .Values.persistence.name }}

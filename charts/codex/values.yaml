@@ -11,7 +11,7 @@ fullnameOverride: ""
 # Replicas
 replica:
   # Replicas count
-  count: 1
+  count: 10
 
 # StatefulSet
 statefulSet:
@@ -31,7 +31,7 @@ image:
   # Image repository
   repository: codexstorage/nim-codex
   # Image tag
-  tag: latest
+  tag: 0.1.4
   # Image pull policy
   pullPolicy: IfNotPresent
 
@@ -112,6 +112,16 @@ codex:
   # - /bin/bash
   # - /docker-entrypoint.sh
   args:
+  - codex
+  - persistence
+  - prover
+  - --bootstrap-node=spr:CiUIAhIhAiJvIcA_ZwPZ9ugVKDbmqwhJZaig5zKyLiuaicRcCGqLEgIDARo8CicAJQgCEiECIm8hwD9nA9n26BUoNuarCEllqKDnMrIuK5qJxFwIaosQ3d6esAYaCwoJBJ_f8zKRAnU6KkYwRAIgM0MvWNJL296kJ9gWvfatfmVvT-A7O2s8Mxp8l9c8EW0CIC-h-H-jBVSgFjg3Eny2u33qF7BDnWFzo7fGfZ7_qc9P
+  - --bootstrap-node=spr:CiUIAhIhAyUvcPkKoGE7-gh84RmKIPHJPdsX5Ugm_IHVJgF-Mmu_EgIDARo8CicAJQgCEiEDJS9w-QqgYTv6CHzhGYog8ck92xflSCb8gdUmAX4ya78QoemesAYaCwoJBES39Q2RAnVOKkYwRAIgLi3rouyaZFS_Uilx8k99ySdQCP1tsmLR21tDb9p8LcgCIG30o5YnEooQ1n6tgm9fCT7s53k6XlxyeSkD_uIO9mb3
+  - --bootstrap-node=spr:CiUIAhIhA6_j28xa--PvvOUxH10wKEm9feXEKJIK3Z9JQ5xXgSD9EgIDARo8CicAJQgCEiEDr-PbzFr74--85TEfXTAoSb195cQokgrdn0lDnFeBIP0QzOGesAYaCwoJBK6Kf1-RAnVEKkcwRQIhAPUH5nQrqG4OW86JQWphdSdnPA98ErQ0hL9OZH9a4e5kAiBBZmUl9KnhSOiDgU3_hvjXrXZXoMxhGuZ92_rk30sNDA
+  - --bootstrap-node=spr:CiUIAhIhA7E4DEMer8nUOIUSaNPA4z6x0n9Xaknd28Cfw9S2-cCeEgIDARo8CicAJQgCEiEDsTgMQx6vydQ4hRJo08DjPrHSf1dqSd3bwJ_D1Lb5wJ4Qt_CesAYaCwoJBEDhWZORAnVYKkYwRAIgFNzhnftocLlVHJl1onuhbSUM7MysXPV6dawHAA0DZNsCIDRVu9gnPTH5UkcRXLtt7MLHCo4-DL-RCMyTcMxYBXL0
+  - --bootstrap-node=spr:CiUIAhIhAzZn3JmJab46BNjadVnLNQKbhnN3eYxwqpteKYY32SbOEgIDARo8CicAJQgCEiEDNmfcmYlpvjoE2Np1Wcs1ApuGc3d5jHCqm14phjfZJs4QrvWesAYaCwoJBKpA-TaRAnViKkcwRQIhANuMmZDD2c25xzTbKSirEpkZYoxbq-FU_lpI0K0e4mIVAiBfQX4yR47h1LCnHznXgDs6xx5DLO5q3lUcicqUeaqGeg
+  - --bootstrap-node=spr:CiUIAhIhAgybmRwboqDdUJjeZrzh43sn5mp8jt6ENIb08tLn4x01EgIDARo8CicAJQgCEiECDJuZHBuioN1QmN5mvOHjeyfmanyO3oQ0hvTy0ufjHTUQh4ifsAYaCwoJBI_0zSiRAnVsKkcwRQIhAJCb_z0E3RsnQrEePdJzMSQrmn_ooHv6mbw1DOh5IbVNAiBbBJrWR8eBV6ftzMd6ofa5khNA2h88OBhMqHCIzSjCeA
+  - --bootstrap-node=spr:CiUIAhIhAntGLadpfuBCD9XXfiN_43-V3L5VWgFCXxg4a8uhDdnYEgIDARo8CicAJQgCEiECe0Ytp2l-4EIP1dd-I3_jf5XcvlVaAUJfGDhry6EN2dgQsIufsAYaCwoJBNEmoCiRAnV2KkYwRAIgXO3bzd5VF8jLZG8r7dcLJ_FnQBYp1BcxrOvovEa40acCIDhQ14eJRoPwJ6GKgqOkXdaFAsoszl-HIRzYcXKeb7D9
   # known as Docker CMD
   # - codex
   # - --bootstrap-node=spr:xxx
@@ -130,14 +140,14 @@ codex:
     # CODEX_METRICS_PORT: 8008
     #
     # API
-    # CODEX_API_BINDADDR: 0.0.0.0
-    # CODEX_API_PORT: 8080
+    CODEX_API_BINDADDR: 0.0.0.0
+    CODEX_API_PORT: 8080
     #
     # P2P communication
     # Currently, only one node can be set via env variable - https://github.com/codex-storage/nim-codex/issues/525
     # and we can use codex.args to pass multiple bootstrap nodes
     # CODEX_BOOTSTRAP: ""
-    # CODEX_NAT: "127.0.0.1"
+    CODEX_NAT: "159.196.192.211"
     CODEX_LISTEN_ADDRS: /ip4/0.0.0.0/tcp/8070
     CODEX_DISC_IP: 0.0.0.0
     CODEX_DISC_PORT: 8090
@@ -145,7 +155,7 @@ codex:
     # Storage
     CODEX_DATA_DIR: /data
     # b, k/kb, m/mb, g/gb, t/tb, p/pb
-    # CODEX_STORAGE_QUOTA: 18gb
+    CODEX_STORAGE_QUOTA: 10tb
     #
     # Maintenance
     # s, m, h, d, w
@@ -154,12 +164,13 @@ codex:
     # CODEX_BLOCK_MN: 1000
     #
     # Persistence
-    # CODEX_PERSISTENCE: false
-    # CODEX_ETH_PROVIDER: ws://localhost:8545
+    CODEX_PERSISTENCE: true
+    #CODEX_ETH_PROVIDER: https://rpc.testnet.codex.storage
     # CODEX_ETH_ACCOUNT: 0x1234567890123456789012345678901234567890
     # file name `codex-eth-private-key` will be used as a secret name to be mounted to the Pod
-    # CODEX_ETH_PRIVATE_KEY: /opt/codex-eth-private-key
-    # CODEX_MARKETPLACE_ADDRESS: 0x1234567890123456789012345678901234567890
+    CODEX_ETH_PRIVATE_KEY: /opt/codex-eth-private-key
+    CODEX_MARKETPLACE_ADDRESS: 0xCDef8d6884557be4F68dC265b6bB2E3e52a6C9d6
+    CODEX_CIRCUIT_DIR: /data/circuits
 
   extraEnv:
     - name: CODEX_ETH_PROVIDER
@@ -170,8 +181,8 @@ codex:
     - name: CODEX_ETH_ACCOUNT
       valueFrom:
         secretKeyRef:
-          name: codex_eth_account
-          key: CODEX_ETH_ACCOUNT_replica_index_pod_index
+          name: codex-eth-private-key
+          key: CODEX_ETH_PRIVATE_KEY-replica_index-pod_index
 
   # Extra environment variables
   # extraEnv:
@@ -203,11 +214,11 @@ codex:
   # Marketplace storage for sale configuration
   # We use postStart lifecycle hook to setup Codex node marketplace configuration via API
   # mutually exclusive with the lifecycle configuration bellow
-  marketplace: {}
-    # totalSize: "8000000000"
-    # duration: "7200"
-    # minPrice: "10"
-    # maxCollateral: "10"
+  marketplace:
+    totalSize: "9900000000000"
+    duration: "604800"
+    minPrice: "5"
+    maxCollateral: "9999999999999999"
 
 # Init container to pass environment variables dynamically to each replica
 initEnv:
@@ -294,39 +305,34 @@ extraPorts: []
 # Ingress for Codex API
 ingress:
   # Enable ingress
-  enabled: false
+  enabled: true
   # Override chart full name
   fullnameOverride: ""
   # Ingress class
-  class: nginx
+  class: traefik
   prettify: false
   # Ingress annotations
   annotations:
-    # kubernetes.io/ingress.class: "nginx"
-    # cert-manager.io/cluster-issuer: "letsencrypt-staging"
-    # nginx.ingress.kubernetes.io/use-regex: "true"
-    # nginx.ingress.kubernetes.io/rewrite-target: /$2
-    # nginx.ingress.kubernetes.io/auth-type: basic
-    # nginx.ingress.kubernetes.io/auth-secret: api-domain-tld-basic-auth
-    # nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - Private Area'
+    traefik.ingress.kubernetes.io/router.middlewares: "codex-ns-auth@kubernetescrd"
+    cert-manager.io/cluster-issuer: "acme-prod"
   tls:
-    - secretName: api-domain-tld
+    - secretName: codex-riff-cc
       hosts:
-        - api.domain.tld
+        - codex.riff.cc
   hosts:
-    - host: api.domain.tld
+    - host: codex.riff.cc
       paths:
         # When podName is blank, URL will use deployed Pod name
-        # https://api.domain.tld/pod-name-1
-        # https://api.domain.tld/pod-name-2
+        # https://codex.riff.cc/pod-name-1
+        # https://codex.riff.cc/pod-name-2
         - path: /
           rewritePath: (/|$)(.*)
           pathType: Prefix
         # When podName is set, in URL we will use that value instead of the deployed Pod name
         # When prettify is set to false, Pod URI will contain the StatefulSet Pod index
         # leadingZeros specify the number of digits in the endpoint Pod name - pod-name-1/01/001
-        # https://api.domain.tld/endpoints/node-01-1
-        # https://api.domain.tld/endpoints/node-02-1
+        # https://codex.riff.cc/endpoints/node-01-1
+        # https://codex.riff.cc/endpoints/node-02-1
         - path: /storage
           rewritePath: (/|$)(.*)
           pathType: Prefix
@@ -375,14 +381,14 @@ persistence:
   # Enable persistence using Persistent Volume Claims
   enabled: true
   # Name prefix for Persistent Volume Claims
-  name: data
+  name: codex-pvc
   # Use an existing PVC to persist data
-  existingClaim: ""
+  existingClaim: "codex-pvc"
   # Access mode of data volume
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   # Size of data volume
-  size: 10Gi
+  size: 1Pi
   # Storage class of data volume
   storageClassName: ""
   # Annotations for volume claim template
@@ -397,10 +403,10 @@ persistence:
 
 # Additional volumes on the output Deployment definition.
 volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
+#- name: codex-eth-private-key
+#  secret:
+#    secretName: codex-eth-private-key
+#    optional: false
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: []

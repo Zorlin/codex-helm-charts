@@ -1,0 +1,9 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: pathstrip
+  namespace: codex-ns
+spec:
+  replacePathRegex:
+    regex: "^/(codex-[0-9]+|storage/node-[0-9]+-1)(/|$)(.*)"
+    replacement: "/$3"
