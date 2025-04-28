@@ -284,13 +284,13 @@ service:
   # Transport port
   transport:
     enabled: true
-    # 30000-32767
+    # 30510-31010
     nodePort: 30510
     nodePortOffset: 10
   # Discovery port
   discovery:
     enabled: true
-    # 30000-32767
+    # 31020-31520
     nodePort: 31020
     nodePortOffset: 10
 
