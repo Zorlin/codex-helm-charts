@@ -176,16 +176,16 @@ codex:
     CODEX_CIRCOM_ZKEY: /data/circuits/proof_main.zkey
 
   extraEnv:
-    #- name: CODEX_ETH_PROVIDER
-    #  valueFrom:
-    #    secretKeyRef:
-    #      name: codex-eth-provider
-    #      key: CODEX_ETH_PROVIDER
-    - name: CODEX_ETH_ACCOUNT
+    - name: CODEX_ETH_PROVIDER
       valueFrom:
         secretKeyRef:
-          name: codex-eth-private-key
-          key: CODEX_ETH_PRIVATE_KEY-replica_index-pod_index
+          name: codex-eth-provider
+          key: CODEX_ETH_PROVIDER
+    #- name: CODEX_ETH_ACCOUNT
+    #  valueFrom:
+    #    secretKeyRef:
+    #      name: codex-eth-private-key
+    #      key: CODEX_ETH_PRIVATE_KEY-replica_index-pod_index
 
   # Extra environment variables
   # extraEnv:
