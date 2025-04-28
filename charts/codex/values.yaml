@@ -31,7 +31,7 @@ image:
   # Image repository
   repository: codexstorage/nim-codex
   # Image tag
-  tag: 0.1.9
+  tag: 0.2.1
   # Image pull policy
   pullPolicy: IfNotPresent
 
@@ -169,7 +169,7 @@ codex:
     # CODEX_ETH_ACCOUNT: 0x1234567890123456789012345678901234567890
     # file name `codex-eth-private-key` will be used as a secret name to be mounted to the Pod
     CODEX_ETH_PRIVATE_KEY: /opt/codex-eth-private-key
-    CODEX_MARKETPLACE_ADDRESS: 0xAB03b6a58C5262f530D54146DA2a552B1C0F7648
+    CODEX_MARKETPLACE_ADDRESS: 0xDB2908d724a15d05c0B6B8e8441a8b36E67476d3
     # CODEX_CIRCUIT_DIR: /data/circuits
     CODEX_CIRCOM_R1CS: /data/circuits/proof_main.r1cs
     CODEX_CIRCOM_WASM: /data/circuits/proof_main.wasm
@@ -220,8 +220,8 @@ codex:
   marketplace:
     totalSize: "9900000000000"
     duration: "604800"
-    minPrice: "5"
-    maxCollateral: "9999999999999999"
+    minPricePerBytePerSecond: "1"
+    totalCollateral: "9999999999999999"
 
 # Init container to pass environment variables dynamically to each replica
 initEnv:
