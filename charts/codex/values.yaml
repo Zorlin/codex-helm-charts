@@ -291,7 +291,7 @@ service:
   discovery:
     enabled: true
     # 30000-32767
-    nodePort: 30511
+    nodePort: 31020
     nodePortOffset: 10
 
 # Extra container ports
