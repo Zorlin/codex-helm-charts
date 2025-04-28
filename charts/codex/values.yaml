@@ -11,7 +11,7 @@ fullnameOverride: ""
 # Replicas
 replica:
   # Replicas count
-  count: 10
+  count: 50
 
 # StatefulSet
 statefulSet:
@@ -31,7 +31,7 @@ image:
   # Image repository
   repository: codexstorage/nim-codex
   # Image tag
-  tag: 0.1.4
+  tag: 0.1.9
   # Image pull policy
   pullPolicy: IfNotPresent
 
@@ -165,19 +165,22 @@ codex:
     #
     # Persistence
     CODEX_PERSISTENCE: true
-    #CODEX_ETH_PROVIDER: https://rpc.testnet.codex.storage
+    CODEX_ETH_PROVIDER: https://rpc.testnet.codex.storage
     # CODEX_ETH_ACCOUNT: 0x1234567890123456789012345678901234567890
     # file name `codex-eth-private-key` will be used as a secret name to be mounted to the Pod
     CODEX_ETH_PRIVATE_KEY: /opt/codex-eth-private-key
-    CODEX_MARKETPLACE_ADDRESS: 0xCDef8d6884557be4F68dC265b6bB2E3e52a6C9d6
-    CODEX_CIRCUIT_DIR: /data/circuits
+    CODEX_MARKETPLACE_ADDRESS: 0xAB03b6a58C5262f530D54146DA2a552B1C0F7648
+    # CODEX_CIRCUIT_DIR: /data/circuits
+    CODEX_CIRCOM_R1CS: /data/circuits/proof_main.r1cs
+    CODEX_CIRCOM_WASM: /data/circuits/proof_main.wasm
+    CODEX_CIRCOM_ZKEY: /data/circuits/proof_main.zkey
 
   extraEnv:
-    - name: CODEX_ETH_PROVIDER
-      valueFrom:
-        secretKeyRef:
-          name: codex-eth-provider
-          key: CODEX_ETH_PROVIDER
+    #- name: CODEX_ETH_PROVIDER
+    #  valueFrom:
+    #    secretKeyRef:
+    #      name: codex-eth-provider
+    #      key: CODEX_ETH_PROVIDER
     - name: CODEX_ETH_ACCOUNT
       valueFrom:
         secretKeyRef:
@@ -234,6 +237,7 @@ initEnv:
   command: ""
   # command: >-
   #     echo test
+  # Disable this if we are not using the initcontainer
   envPath: /opt/env
 
 # Pod ports
@@ -390,7 +394,7 @@ persistence:
   # Size of data volume
   size: 1Pi
   # Storage class of data volume
-  storageClassName: ""
+  storageClassName: "moosefs-storage"
   # Annotations for volume claim template
   annotations: {}
   #  foo: bar
@@ -402,11 +406,11 @@ persistence:
     whenDeleted: Retain
 
 # Additional volumes on the output Deployment definition.
-volumes: []
-#- name: codex-eth-private-key
-#  secret:
-#    secretName: codex-eth-private-key
-#    optional: false
+volumes:
+- name: codex-eth-private-key
+  secret:
+    secretName: codex-eth-private-key
+    optional: false
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: []
