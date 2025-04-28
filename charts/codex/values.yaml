@@ -155,7 +155,7 @@ codex:
     # Storage
     CODEX_DATA_DIR: /data
     # b, k/kb, m/mb, g/gb, t/tb, p/pb
-    CODEX_STORAGE_QUOTA: 10tb
+    CODEX_STORAGE_QUOTA: 1500tb
     #
     # Maintenance
     # s, m, h, d, w
@@ -291,7 +291,7 @@ service:
   discovery:
     enabled: true
     # 30000-32767
-    nodePort: 30510
+    nodePort: 30511
     nodePortOffset: 10
 
 # Extra container ports
