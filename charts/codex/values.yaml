@@ -147,7 +147,7 @@ codex:
     # Currently, only one node can be set via env variable - https://github.com/codex-storage/nim-codex/issues/525
     # and we can use codex.args to pass multiple bootstrap nodes
     # CODEX_BOOTSTRAP: ""
-    CODEX_NAT: "159.196.192.211"
+    CODEX_NAT: "extip:159.196.192.211"
     CODEX_LISTEN_ADDRS: /ip4/0.0.0.0/tcp/8070
     CODEX_DISC_IP: 0.0.0.0
     CODEX_DISC_PORT: 8090
