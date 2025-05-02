@@ -272,7 +272,7 @@ service:
   # multiple StatefulSets
   # true:  codex-1-service   codex-1-nodeport   codex-2-service   codex-2-nodeport
   # false: codex-1-1-service codex-1-1-nodeport codex-2-1-service codex-2-1-nodeport
-  prettify: true
+  prettify: false
   # API port
   api:
     enabled: true
@@ -342,7 +342,7 @@ ingress:
           pathType: Prefix
           podName: node
           prettify: false
-          leadingZeros: 2
+          leadingZeros: 0
 
 # Pod resources
 resources: {}

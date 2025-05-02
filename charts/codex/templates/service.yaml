@@ -16,7 +16,7 @@ metadata:
 spec:
   {{- if eq $type "nodeport" }}
   type: NodePort
-  externalTrafficPolicy: Local
+  externalTrafficPolicy: Cluster
   {{- else }}
   type: ClusterIP
   {{- end }}
